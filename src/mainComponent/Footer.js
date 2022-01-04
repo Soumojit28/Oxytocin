@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Footer.css";
 import opensea from "../assets/opensea.png";
 import medium from "../assets/medium.png";

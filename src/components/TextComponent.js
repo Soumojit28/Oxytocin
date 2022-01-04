@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import SplitText from "./SplitText";
+import { providerHandler } from "./../Contractor/SmapleCourt";
 
 const TextComponent = (props) => {
   const connectWalletHandler = () => {
     if (window.ethereum) {
       window.ethereum
         .request({ method: "eth_requestAccounts" })
-        .then((result) => {
-          console.log(result);
+        .then(async (result) => {
+          await providerHandler();
           props.showMintHandler();
+        })
+        .catch((e) => {
+          console.log(e);
         });
     }
   };
