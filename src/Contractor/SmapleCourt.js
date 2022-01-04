@@ -25,7 +25,28 @@ const abi = [{
   "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
   "stateMutability": "view",
   "type": "function"
-}
+},
+{
+  "inputs": [],
+  "name": "tribepass_PRESALE_PRICE",
+  "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+  "stateMutability": "view",
+  "type": "function"
+},
+{
+  "inputs": [],
+  "name": "tribepass_MAINSALE_PRICE",
+  "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+  "stateMutability": "view",
+  "type": "function"
+},
+{
+  "inputs": [],
+  "name": "tribepass_MAX_COUNT",
+  "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+  "stateMutability": "view",
+  "type": "function"
+},
 ]
 const contract = new ethers.Contract(contractAddress, abi, provider);
 
@@ -44,6 +65,24 @@ export const presaleLive = async () => {
 
 export const saleLive = async () => {
   const n= await contract.saleLive();
+  return (n)
+
+};
+
+export const presaleValue = async () => {
+  const n= await contract.25. tribepass_PRESALE_PRICE();
+  return (n)
+
+};
+
+export const mainsaleValue = async () => {
+  const n= await contract.tribepass_MAINSALE_PRICE();
+  return (n)
+
+};
+
+export const maxCount = async () => {
+  const n= await contract.tribepass_MAX_COUNT();
   return (n)
 
 };
