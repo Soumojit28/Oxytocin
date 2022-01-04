@@ -2,10 +2,16 @@
 import { ethers } from "ethers";
 let contract;
 export const providerHandler = async () => {
-  // const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const provider = new ethers.getDefaultProvider(
-    "wss://rinkeby.infura.io/ws/v3/fe8e5ac01a944ba2a9fd24160581045a"
-  );
+  // const testprovider = new ethers.providers.Web3Provider(window.ethereum);
+  // const accounts = await testprovider.listAccounts();
+  // console.log(accounts[0]);
+  // const balance = await testprovider.getBalance(accounts[0]);
+  // console.log(balance);
+  // const provider = new ethers.getDefaultProvider(
+  //   "wss://rinkeby.infura.io/ws/v3/fe8e5ac01a944ba2a9fd24160581045a"
+  // );
+
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
   const signer = provider.getSigner();
 
   const contractAddress = "0xE5e766241dcB766AaeADD4D997F7f7F2b188109b";
@@ -53,7 +59,7 @@ export const providerHandler = async () => {
       type: "function",
     },
   ];
-  contract = new ethers.Contract(contractAddress, abi, provider);
+  contract = new ethers.Contract(contractAddress, abi, signer);
 };
 export const totalSupply = async () => {
   const n = await contract.totalSupply();
@@ -72,12 +78,13 @@ export const saleLive = async () => {
 
 export const presaleValue = async () => {
   const n = await contract.tribepass_PRESALE_PRICE();
-  return n;
+  return (Number(ethers.utils.formatEther(n)))
+ 
 };
 
 export const mainsaleValue = async () => {
   const n = await contract.tribepass_MAINSALE_PRICE();
-  return n;
+  return (Number(ethers.utils.formatEther(n)))
 };
 
 export const maxCount = async () => {

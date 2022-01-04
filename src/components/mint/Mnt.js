@@ -33,7 +33,7 @@ const Mint = () => {
       setPreSaleBool(e);
     });
     presaleValue().then((e) => {
-      const dec = parseInt(e._hex, 16);
+      const dec = e
       setpreSaleValue((prev) => (dec === 0 ? prev : dec));
     });
     maxCount().then((e) => {
@@ -45,7 +45,7 @@ const Mint = () => {
       setMainSaleBool(e);
     });
     mainsaleValue().then((e) => {
-      const dec = parseInt(e._hex, 16);
+      const dec = e
       setMainSaleValue((prev) => (dec === 0 ? prev : dec));
     });
   }, []);
