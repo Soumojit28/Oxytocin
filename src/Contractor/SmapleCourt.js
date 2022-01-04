@@ -11,7 +11,22 @@ const abi = [{
   "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
   "stateMutability": "view",
   "type": "function"
-}]
+},
+{
+  "inputs": [],
+  "name": "presaleLive",
+  "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+  "stateMutability": "view",
+  "type": "function"
+},
+{
+  "inputs": [],
+  "name": "saleLive",
+  "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+  "stateMutability": "view",
+  "type": "function"
+}
+]
 const contract = new ethers.Contract(contractAddress, abi, provider);
 
 export const totalSupply = async () => {
