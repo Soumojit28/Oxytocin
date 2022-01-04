@@ -19,3 +19,16 @@ export const totalSupply = async () => {
   return (n.toNumber())
 
 };
+
+
+export const presaleLive = async () => {
+  const n= await contract.presaleLive();
+  return (n)
+
+};
+
+export const saleLive = async () => {
+  const n= await contract.saleLive();
+  return (n)
+
+};
