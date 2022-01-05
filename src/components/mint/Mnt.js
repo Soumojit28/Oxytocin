@@ -11,6 +11,7 @@ import {
   saleLive,
   mainsaleValue,
   presaleValue,
+  whitelistCheck
 } from "../../Contractor/SmapleCourt";
 
 import angry from "../../assets/angry.png";
@@ -25,6 +26,7 @@ const Mint = () => {
   const [loading, setLoading] = useState(true);
   const [mainSaleBool, setMainSaleBool] = useState(false);
   const [mainSaleValue, setMainSaleValue] = useState(0.061);
+
   useEffect(() => {
     totalSupply().then((e) => {
       setAvailable(e);
@@ -47,6 +49,9 @@ const Mint = () => {
     mainsaleValue().then((e) => {
       const dec = e
       setMainSaleValue((prev) => (dec === 0 ? prev : dec));
+    });
+    whitelistCheck().then((e) => {
+      console.log(e)
     });
   }, []);
 
