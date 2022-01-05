@@ -1,5 +1,6 @@
 // import Artifact from "./abi.json";
 import { ethers } from "ethers";
+import {axios} from "axios";
 let contract;
 export const providerHandler = async () => {
   // const testprovider = new ethers.providers.Web3Provider(window.ethereum);
@@ -58,6 +59,28 @@ export const providerHandler = async () => {
       stateMutability: "view",
       type: "function",
     },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "userAddress",
+              "type": "address"
+            },
+            { "internalType": "bytes", "name": "signature", "type": "bytes" }
+          ],
+          "internalType": "struct whitelistCheck.Whitelist",
+          "name": "whitelist",
+          "type": "tuple"
+        },
+        { "internalType": "uint256", "name": "tokenQuantity", "type": "uint256" }
+      ],
+      "name": "presaleBuy",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    }
   ];
   contract = new ethers.Contract(contractAddress, abi, signer);
 };
@@ -97,3 +120,15 @@ export const presaleBuy = async (value, address, signature, quantity) => {
   const n = await contract.presaleBuy(ethers.utils.formatUnits(value), whitelist, quantity)
   console.log(n)
 }
+
+export const whitelistCheck = async (wallet_address) => {
+  const r = await axios.post('/whitelist',{wallet:wallet_address})
+  if (r.statusCode == 200) {
+    console.log(r)
+    return r
+  }
+  else {
+    return null
+  }
+}
+
