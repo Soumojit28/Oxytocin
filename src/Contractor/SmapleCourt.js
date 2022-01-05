@@ -79,7 +79,7 @@ export const saleLive = async () => {
 export const presaleValue = async () => {
   const n = await contract.tribepass_PRESALE_PRICE();
   return (Number(ethers.utils.formatEther(n)))
- 
+
 };
 
 export const mainsaleValue = async () => {
@@ -91,3 +91,9 @@ export const maxCount = async () => {
   const n = await contract.tribepass_MAX_COUNT();
   return n;
 };
+
+export const presaleBuy = async (value, address, signature, quantity) => {
+  const whitelist = `["${address}","${signature}"]`
+  const n = await contract.presaleBuy(ethers.utils.formatUnits(value), whitelist, quantity)
+  console.log(n)
+}
