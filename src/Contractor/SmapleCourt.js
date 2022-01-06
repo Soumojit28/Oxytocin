@@ -126,18 +126,16 @@ export const maxCount = async () => {
   const n = await contract.tribepass_MAX_COUNT();
   return n;
 };
-export const presaleBuy = async (value, signature, quantity) => {
-  console.log(value, signature, quantity);
-  console.log(ethers.utils.parseEther(`${value * quantity}`).toString());
+export const presaleBuy = async (value, signature, quantity, setRefresh) => {
   const amount = Number(
     ethers.utils.parseEther(`${value * quantity}`).toString()
   );
-  console.log(amount);
+
   try {
     const n = await contract.presaleBuy([address, signature], quantity, {
       value: ethers.utils.parseEther(`${value * quantity}`).toString(),
     });
-    console.log(n);
+
     toast(
       <div>
         <h4>Your Request is processing</h4>
@@ -145,37 +143,17 @@ export const presaleBuy = async (value, signature, quantity) => {
         <h4>{n.hash}</h4>
       </div>,
       {
-        position: "top-right",
+        ...toastProperties,
         autoClose: 10000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
       }
     );
     const receipt = await n.wait();
-    toast.success(`your transaction is completed.`, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-    console.log(receipt);
+    toast.success(`your transaction is completed.`, toastProperties);
+
+    setRefresh(true);
   } catch (e) {
-    toast.error("transaction failed " + e.message, {
-      position: "top-right",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-    });
-    console.log("transaction failed " + e.message);
+    toast.error("transaction failed " + e.message, toastProperties);
+
     return null;
   }
 };
@@ -185,11 +163,9 @@ export const buy = async (value, quantity) => {
     const n = await contract.buy(quantity, {
       value: ethers.utils.parseEther(`${value * quantity}`).toString(),
     });
-    console.log(n);
+
     const receipt = await n.wait();
-    console.log(receipt);
   } catch (e) {
-    console.log("transaction failed " + e.message);
     return null;
   }
 };
@@ -202,10 +178,19 @@ export const whitelistCheck = async () => {
         wallet: address,
       }
     );
-    console.log(data);
+
     return data;
   } catch (error) {
-    console.log(error);
     return null;
   }
+};
+
+const toastProperties = {
+  position: "top-right",
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
 };

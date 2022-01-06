@@ -11,9 +11,7 @@ const TextComponent = (props) => {
           await providerHandler();
           props.showMintHandler(result);
         })
-        .catch((e) => {
-          console.log(e);
-        });
+        .catch((e) => {});
     }
   };
   return (

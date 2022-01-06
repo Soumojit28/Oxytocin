@@ -30,6 +30,7 @@ const Mint = (props) => {
   const [mainSaleBool, setMainSaleBool] = useState(false);
   const [mainSaleValue, setMainSaleValue] = useState(0.061);
   const [whitelistMessage, setWhiteListMessage] = useState("");
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     totalSupply().then((e) => {
@@ -55,7 +56,14 @@ const Mint = (props) => {
       setMainSaleValue((prev) => (dec === 0 ? prev : dec));
     });
   }, []);
-
+  useEffect(() => {
+    if (refresh) {
+      totalSupply().then((e) => {
+        setAvailable(e);
+      });
+      setRefresh(false);
+    }
+  }, [refresh]);
   useEffect(() => {
     if (preSaleBool) {
       whitelistCheck().then((e) => {
@@ -149,8 +157,12 @@ const Mint = (props) => {
                   disabled={!preSaleBool}
                   className={preSaleBool ? "" : "disable"}
                   onClick={() => {
-                    console.log("hello");
-                    presaleBuy(preSaleValue, whitelistMessage, count);
+                    presaleBuy(
+                      preSaleValue,
+                      whitelistMessage,
+                      count,
+                      setRefresh
+                    );
                   }}
                 >
                   MINT
