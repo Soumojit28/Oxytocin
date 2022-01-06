@@ -12,6 +12,7 @@ import {
   mainsaleValue,
   presaleValue,
   whitelistCheck,
+  presaleBuy,
 } from "../../Contractor/SmapleCourt";
 
 import angry from "../../assets/angry.png";
@@ -148,7 +149,7 @@ const Mint = (props) => {
                   disabled={!preSaleBool}
                   className={preSaleBool ? "" : "disable"}
                   onClick={() => {
-                    console.log("hello");
+                    presaleBuy(preSaleValue, whitelistMessage, count);
                   }}
                 >
                   MINT

@@ -117,6 +117,7 @@ export const maxCount = async () => {
   return n;
 };
 export const presaleBuy = async (value, signature, quantity) => {
+  console.log(value, signature, quantity);
   const whitelist = `["${address}","${signature}"]`;
   const n = await contract.presaleBuy(
     ethers.utils.formatUnits(value),

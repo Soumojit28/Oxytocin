@@ -4,7 +4,7 @@ function parallax() {
   function parallax(e) {
     const x = (window.innerWidth - e.pageX * 2) / 100;
     const y = (window.innerHeight - e.pageY * 2) / 100;
-    console.log(x, y);
+
     elem.style.transform = `translateX(${x}px) translateY(${y}px)`;
   }
 }
