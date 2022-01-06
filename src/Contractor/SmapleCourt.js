@@ -1,5 +1,6 @@
 // import Artifact from "./abi.json";
 import { ethers } from "ethers";
+import { toast } from "react-toastify";
 import axios from "axios";
 let contract;
 let address;
@@ -117,21 +118,42 @@ export const maxCount = async () => {
   return n;
 };
 export const presaleBuy = async (value, signature, quantity) => {
-  console.log(value, signature, quantity)
-  console.log(ethers.utils.parseEther(`${value*quantity}`).toString());
+  console.log(value, signature, quantity);
+  console.log(ethers.utils.parseEther(`${value * quantity}`).toString());
   try {
-  const n = await contract.presaleBuy(
-    
-    [address, signature],
-    quantity,
-    {value:ethers.utils.parseEther(`${value*quantity}`).toString()}
-  );
-   console.log(n);
-   const receipt =await n.wait();
-   console.log(receipt);
-  }
-  catch(e){
-    console.log('transaction failed '+e.message);
+    const n = await contract.presaleBuy([address, signature], quantity, {
+      value: ethers.utils.parseEther(`${value * quantity}`).toString(),
+    });
+    console.log(n);
+    toast(
+      <div>
+        <h4>Your Request is processing</h4>
+        <h4>Your hash is :</h4>
+        <h4>{n.hash}</h4>
+      </div>,
+      {
+        position: "top-right",
+        autoClose: 10000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      }
+    );
+    const receipt = await n.wait();
+    toast.success(`your transaction is completed.`, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    console.log(receipt);
+  } catch (e) {
+    console.log("transaction failed " + e.message);
     return null;
   }
 };

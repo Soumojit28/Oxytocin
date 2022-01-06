@@ -17,6 +17,8 @@ import {
 
 import angry from "../../assets/angry.png";
 import RingLoader from "react-spinners/RingLoader";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Mint = (props) => {
   const [count, setCount] = useState(1);
@@ -57,7 +59,6 @@ const Mint = (props) => {
   useEffect(() => {
     if (preSaleBool) {
       whitelistCheck().then((e) => {
-        console.log(e);
         setWhiteListMessage(e);
       });
     }
@@ -95,7 +96,6 @@ const Mint = (props) => {
           <h2 className="available">
             {max - available} of {max} available
           </h2>
-          {console.log(preSaleBool && !!whitelistMessage)}
           {preSaleBool && !!whitelistMessage ? (
             <h2>You are in whiteist</h2>
           ) : (
@@ -149,11 +149,13 @@ const Mint = (props) => {
                   disabled={!preSaleBool}
                   className={preSaleBool ? "" : "disable"}
                   onClick={() => {
+                    console.log("hello");
                     presaleBuy(preSaleValue, whitelistMessage, count);
                   }}
                 >
                   MINT
                 </button>
+                <ToastContainer />
               </div>
             </section>
           </div>
