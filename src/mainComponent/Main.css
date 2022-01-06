@@ -129,5 +129,6 @@ p span span {
     height: 100vh;
     margin-top: 0vh;
     margin-left: 0%;
+    /* transform: translate(0); */
   }
 }

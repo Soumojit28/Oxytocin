@@ -75,7 +75,7 @@ const Mint = (props) => {
     }
   };
   return (
-    <div className="mint" style={{ padding: "40px" }}>
+    <div className="mint" style={{ padding: loading ? "" : "40px" }}>
       {loading ? (
         <div className="loading">
           <RingLoader color="#FF1700" loading={true} size={50} />
@@ -97,7 +97,7 @@ const Mint = (props) => {
             {max - available} of {max} available
           </h2>
           {preSaleBool && !!whitelistMessage ? (
-            <h2>You are in whiteist</h2>
+            <h2>You are in whitelist</h2>
           ) : (
             <h2>You are not in whitelist</h2>
           )}
