@@ -129,6 +129,8 @@ export const maxCount = async () => {
 export const presaleBuy = async (value, signature, quantity) => {
   console.log(value, signature, quantity);
   console.log(ethers.utils.parseEther(`${value * quantity}`).toString());
+  const amount=Number(ethers.utils.parseEther(`${value * quantity}`).toString())
+  console.log(amount);
   try {
     const n = await contract.presaleBuy([address, signature], quantity, {
       value: ethers.utils.parseEther(`${value * quantity}`).toString(),
@@ -192,7 +194,7 @@ export const buy = async (value, quantity) => {
 
 export const whitelistCheck = async () => {
   try {
-    const { data } = await axios.post("http://18.212.3.7:8000/whitelist", {
+    const { data } = await axios.post("https://tribepass-back.herokuapp.com/whiteList", {
       wallet: address,
     });
     console.log(data);
