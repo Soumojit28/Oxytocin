@@ -18,7 +18,7 @@ export const providerHandler = async () => {
   address = account[0];
   const signer = provider.getSigner();
 
-  const contractAddress = "0x08A2623c9e7CC039B16B01c7fD206053A506879E";
+  const contractAddress = "0xE5e766241dcB766AaeADD4D997F7f7F2b188109b";
   const abi = [
     {
       inputs: [],
@@ -128,7 +128,7 @@ export const presaleBuy = async (value, signature, quantity) => {
 
 export const whitelistCheck = async () => {
   try {
-    const { data } = await axios.post("http://localhost:8000/whitelist", {
+    const { data } = await axios.post("http://18.212.3.7:8000/whitelist", {
       wallet: address,
     });
     console.log(data);

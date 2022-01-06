@@ -60,7 +60,7 @@ const Mint = (props) => {
         setWhiteListMessage(e);
       });
     }
-  }, [preSaleValue]);
+  }, [preSaleBool]);
 
   const decreaseCount = () => {
     if (count > 1) {
