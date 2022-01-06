@@ -18,7 +18,7 @@ export const providerHandler = async () => {
   address = account[0];
   const signer = provider.getSigner();
 
-  const contractAddress = "0xE5e766241dcB766AaeADD4D997F7f7F2b188109b";
+  const contractAddress = "0x08A2623c9e7CC039B16B01c7fD206053A506879E";
   const abi = [
     {
       inputs: [],
@@ -116,7 +116,7 @@ export const maxCount = async () => {
   const n = await contract.tribepass_MAX_COUNT();
   return n;
 };
-export const presaleBuy = async (value, address, signature, quantity) => {
+export const presaleBuy = async (value, signature, quantity) => {
   const whitelist = `["${address}","${signature}"]`;
   const n = await contract.presaleBuy(
     ethers.utils.formatUnits(value),
