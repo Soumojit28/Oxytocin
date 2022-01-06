@@ -117,14 +117,23 @@ export const maxCount = async () => {
   return n;
 };
 export const presaleBuy = async (value, signature, quantity) => {
-  console.log(value, signature, quantity);
-  const whitelist = `["${address}","${signature}"]`;
+  console.log(value, signature, quantity)
+  console.log(ethers.utils.parseEther(`${value*quantity}`).toString());
+  try {
   const n = await contract.presaleBuy(
-    ethers.utils.formatUnits(value),
-    whitelist,
-    quantity
+    
+    [address, signature],
+    quantity,
+    {value:ethers.utils.parseEther(`${value*quantity}`).toString()}
   );
-  console.log(n);
+   console.log(n);
+   const receipt =await n.wait();
+   console.log(receipt);
+  }
+  catch(e){
+    console.log('transaction failed '+e.message);
+    return null;
+  }
 };
 
 export const whitelistCheck = async () => {
