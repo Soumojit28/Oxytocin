@@ -86,13 +86,13 @@ export const providerHandler = async () => {
       type: "function",
     },
     {
-      "inputs": [
-        { "internalType": "uint256", "name": "tokenQuantity", "type": "uint256" }
+      inputs: [
+        { internalType: "uint256", name: "tokenQuantity", type: "uint256" },
       ],
-      "name": "buy",
-      "outputs": [],
-      "stateMutability": "payable",
-      "type": "function"
+      name: "buy",
+      outputs: [],
+      stateMutability: "payable",
+      type: "function",
     },
   ];
   contract = new ethers.Contract(contractAddress, abi, signer);
@@ -162,27 +162,33 @@ export const presaleBuy = async (value, signature, quantity) => {
     });
     console.log(receipt);
   } catch (e) {
+    toast.error("transaction failed " + e.message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
     console.log("transaction failed " + e.message);
     return null;
   }
 };
 
-export const buy = async (value, quantity)=> {
+export const buy = async (value, quantity) => {
   try {
-    const n = await contract.buy(
-      quantity,
-      {value:ethers.utils.parseEther(`${value*quantity}`).toString()}
-    );
-     console.log(n);
-     const receipt =await n.wait();
-     console.log(receipt);
-    }
-    catch(e){
-      console.log('transaction failed '+e.message);
-      return null;
-    }
-  };
-
+    const n = await contract.buy(quantity, {
+      value: ethers.utils.parseEther(`${value * quantity}`).toString(),
+    });
+    console.log(n);
+    const receipt = await n.wait();
+    console.log(receipt);
+  } catch (e) {
+    console.log("transaction failed " + e.message);
+    return null;
+  }
+};
 
 export const whitelistCheck = async () => {
   try {
