@@ -18,3 +18,7 @@ h1 {
   align-items: center;
   justify-content: center;
 }
+.loader-image {
+  width: 150px;
+  height: 150px;
+}

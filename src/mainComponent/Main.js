@@ -13,11 +13,13 @@ import Mint from "./../components/mint/Mnt";
 const Main = (props) => {
   const [play, setPlay] = useState(false);
   const [showMint, setShowMint] = useState(false);
+  const [address, setAddress] = useState("");
   useEffect(() => {
     parallax();
   }, []);
-  const showMintHandler = () => {
+  const showMintHandler = (wallet) => {
     setShowMint(true);
+    setAddress(wallet);
   };
   const playAudio = (type) => {
     const audio = document.getElementById("playAudio");
@@ -41,11 +43,11 @@ const Main = (props) => {
           <VolumeOffIcon className="mute" onClick={() => playAudio("start")} />
         )}
 
-        <audio autoPlay={true} loop id="playAudio" muted={false}>
+        <audio id="playAudio">
           <source src={song} />
         </audio>
         {showMint ? (
-          <Mint />
+          <Mint address={address} />
         ) : (
           <TextComponent showMintHandler={showMintHandler} />
         )}

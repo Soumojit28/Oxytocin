@@ -1,8 +1,8 @@
 // import Artifact from "./abi.json";
 import { ethers } from "ethers";
-import axios  from "axios";
+import axios from "axios";
 let contract;
-let address
+let address;
 export const providerHandler = async () => {
   // const testprovider = new ethers.providers.Web3Provider(window.ethereum);
   // const accounts = await testprovider.listAccounts();
@@ -14,8 +14,8 @@ export const providerHandler = async () => {
   // );
 
   const provider = new ethers.providers.Web3Provider(window.ethereum);
-  const account= await provider.listAccounts();
-  address=account[0]
+  const account = await provider.listAccounts();
+  address = account[0];
   const signer = provider.getSigner();
 
   const contractAddress = "0xE5e766241dcB766AaeADD4D997F7f7F2b188109b";
@@ -63,27 +63,27 @@ export const providerHandler = async () => {
       type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "components": [
+          components: [
             {
-              "internalType": "address",
-              "name": "userAddress",
-              "type": "address"
+              internalType: "address",
+              name: "userAddress",
+              type: "address",
             },
-            { "internalType": "bytes", "name": "signature", "type": "bytes" }
+            { internalType: "bytes", name: "signature", type: "bytes" },
           ],
-          "internalType": "struct whitelistCheck.Whitelist",
-          "name": "whitelist",
-          "type": "tuple"
+          internalType: "struct whitelistCheck.Whitelist",
+          name: "whitelist",
+          type: "tuple",
         },
-        { "internalType": "uint256", "name": "tokenQuantity", "type": "uint256" }
+        { internalType: "uint256", name: "tokenQuantity", type: "uint256" },
       ],
-      "name": "presaleBuy",
-      "outputs": [],
-      "stateMutability": "payable",
-      "type": "function"
-    }
+      name: "presaleBuy",
+      outputs: [],
+      stateMutability: "payable",
+      type: "function",
+    },
   ];
   contract = new ethers.Contract(contractAddress, abi, signer);
 };
@@ -104,35 +104,37 @@ export const saleLive = async () => {
 
 export const presaleValue = async () => {
   const n = await contract.tribepass_PRESALE_PRICE();
-  return (Number(ethers.utils.formatEther(n)))
-
+  return Number(ethers.utils.formatEther(n));
 };
 
 export const mainsaleValue = async () => {
   const n = await contract.tribepass_MAINSALE_PRICE();
-  return (Number(ethers.utils.formatEther(n)))
+  return Number(ethers.utils.formatEther(n));
 };
 
 export const maxCount = async () => {
   const n = await contract.tribepass_MAX_COUNT();
   return n;
 };
-
 export const presaleBuy = async (value, address, signature, quantity) => {
-  const whitelist = `["${address}","${signature}"]`
-  const n = await contract.presaleBuy(ethers.utils.formatUnits(value), whitelist, quantity)
-  console.log(n)
-}
+  const whitelist = `["${address}","${signature}"]`;
+  const n = await contract.presaleBuy(
+    ethers.utils.formatUnits(value),
+    whitelist,
+    quantity
+  );
+  console.log(n);
+};
 
 export const whitelistCheck = async () => {
   try {
-    const {data} = await axios.post('/whitelist', { wallet: address })
-      console.log(data)
-      return data
+    const { data } = await axios.post("http://localhost:8000/whitelist", {
+      wallet: address,
+    });
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.log(error);
+    return null;
   }
-  catch (error){
-    console.log(error)
-    return null
-  }
-}
-
+};

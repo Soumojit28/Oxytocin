@@ -11,13 +11,13 @@ import {
   saleLive,
   mainsaleValue,
   presaleValue,
-  whitelistCheck
+  whitelistCheck,
 } from "../../Contractor/SmapleCourt";
 
 import angry from "../../assets/angry.png";
 import RingLoader from "react-spinners/RingLoader";
 
-const Mint = () => {
+const Mint = (props) => {
   const [count, setCount] = useState(1);
   const [available, setAvailable] = useState(null);
   const [preSaleBool, setPreSaleBool] = useState(false);
@@ -26,6 +26,7 @@ const Mint = () => {
   const [loading, setLoading] = useState(true);
   const [mainSaleBool, setMainSaleBool] = useState(false);
   const [mainSaleValue, setMainSaleValue] = useState(0.061);
+  const [whitelistMessage, setWhiteListMessage] = useState("");
 
   useEffect(() => {
     totalSupply().then((e) => {
@@ -35,7 +36,7 @@ const Mint = () => {
       setPreSaleBool(e);
     });
     presaleValue().then((e) => {
-      const dec = e
+      const dec = e;
       setpreSaleValue((prev) => (dec === 0 ? prev : dec));
     });
     maxCount().then((e) => {
@@ -47,20 +48,25 @@ const Mint = () => {
       setMainSaleBool(e);
     });
     mainsaleValue().then((e) => {
-      const dec = e
+      const dec = e;
       setMainSaleValue((prev) => (dec === 0 ? prev : dec));
     });
-    whitelistCheck().then((e) => {
-      console.log(e)
-    });
   }, []);
+
+  useEffect(() => {
+    if (preSaleBool) {
+      whitelistCheck().then((e) => {
+        console.log(e);
+        setWhiteListMessage(e);
+      });
+    }
+  }, [preSaleValue]);
 
   const decreaseCount = () => {
     if (count > 1) {
       setCount((prev) => prev - 1);
     }
   };
-
   const increaseCount = () => {
     if (count < 2) {
       setCount((prev) => prev + 1);
@@ -86,8 +92,15 @@ const Mint = () => {
             }}
           />
           <h2 className="available">
-            {available} of {max} available
+            {max - available} of {max} available
           </h2>
+          {console.log(preSaleBool && !!whitelistMessage)}
+          {preSaleBool && !!whitelistMessage ? (
+            <h2>You are in whiteist</h2>
+          ) : (
+            <h2>You are not in whitelist</h2>
+          )}
+
           <div className="mint-container">
             <section className="sample-container">
               <img src={angry} className="sample" />

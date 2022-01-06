@@ -9,7 +9,7 @@ const TextComponent = (props) => {
         .request({ method: "eth_requestAccounts" })
         .then(async (result) => {
           await providerHandler();
-          props.showMintHandler();
+          props.showMintHandler(result);
         })
         .catch((e) => {
           console.log(e);
