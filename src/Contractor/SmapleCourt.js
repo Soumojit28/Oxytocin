@@ -84,6 +84,15 @@ export const providerHandler = async () => {
       stateMutability: "payable",
       type: "function",
     },
+    {
+      "inputs": [
+        { "internalType": "uint256", "name": "tokenQuantity", "type": "uint256" }
+      ],
+      "name": "buy",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
   ];
   contract = new ethers.Contract(contractAddress, abi, signer);
 };
@@ -135,6 +144,23 @@ export const presaleBuy = async (value, signature, quantity) => {
     return null;
   }
 };
+
+export const buy = async (value, quantity)=> {
+  try {
+    const n = await contract.buy(
+      quantity,
+      {value:ethers.utils.parseEther(`${value*quantity}`).toString()}
+    );
+     console.log(n);
+     const receipt =await n.wait();
+     console.log(receipt);
+    }
+    catch(e){
+      console.log('transaction failed '+e.message);
+      return null;
+    }
+  };
+
 
 export const whitelistCheck = async () => {
   try {
