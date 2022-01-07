@@ -158,14 +158,21 @@ export const presaleBuy = async (value, signature, quantity, setRefresh) => {
   }
 };
 
-export const buy = async (value, quantity) => {
+export const buy = async (value, quantity, setRefresh) => {
   try {
+    toast(<h4>Your Request is processing</h4>, {
+      ...toastProperties,
+      autoClose: 10000,
+    });
     const n = await contract.buy(quantity, {
       value: ethers.utils.parseEther(`${value * quantity}`).toString(),
     });
 
     const receipt = await n.wait();
+    toast.success(`your transaction is completed.`, toastProperties);
+    setRefresh(true);
   } catch (e) {
+    toast.error("transaction failed " + e.message, toastProperties);
     return null;
   }
 };

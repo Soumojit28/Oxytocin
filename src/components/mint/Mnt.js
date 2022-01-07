@@ -19,11 +19,12 @@ import angry from "../../assets/angry.png";
 import RingLoader from "react-spinners/RingLoader";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { buy } from "./../../Contractor/SmapleCourt";
 
 const Mint = (props) => {
   const [count, setCount] = useState(1);
-  const [available, setAvailable] = useState(null);
-  const [preSaleBool, setPreSaleBool] = useState(false);
+  const [available, setAvailable] = useState(" ");
+  const [preSaleBool, setPreSaleBool] = useState(true);
   const [preSaleValue, setpreSaleValue] = useState(0.061);
   const [max, setMax] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -104,11 +105,12 @@ const Mint = (props) => {
           <h2 className="available">
             {max - available} of {max} available
           </h2>
-          {preSaleBool && !!whitelistMessage ? (
-            <h2>You are in whitelist</h2>
-          ) : (
-            <h2>You are not in whitelist</h2>
-          )}
+          {preSaleBool &&
+            (whitelistMessage ? (
+              <h2>You are in whitelist</h2>
+            ) : whitelistMessage === null ? (
+              <h2>You are not in whitelist</h2>
+            ) : null)}
 
           <div className="mint-container">
             <section className="sample-container">
@@ -126,8 +128,12 @@ const Mint = (props) => {
                     className="ethereum-value"
                     style={{ fontSize: "30px", textTransform: "capitalize" }}
                   >
-                    {preSaleBool && preSaleValue}
-                    {!preSaleBool && mainSaleBool && mainSaleValue}/mint
+                    {preSaleBool && preSaleValue
+                      ? preSaleValue
+                      : !preSaleBool && mainSaleBool && mainSaleValue
+                      ? mainSaleValue
+                      : 0}
+                    /mint
                   </p>
                 </div>
                 <div className="addButtons">
@@ -148,21 +154,34 @@ const Mint = (props) => {
                     className="ethereum-value"
                     style={{ fontSize: "40px", textTransform: "capitalize" }}
                   >
-                    {preSaleBool && preSaleValue * count}
-                    {!preSaleBool && mainSaleBool && mainSaleValue * count}
+                    {preSaleBool && preSaleValue
+                      ? preSaleValue * count
+                      : !preSaleBool && mainSaleBool && mainSaleValue
+                      ? mainSaleValue * count
+                      : 0}
                     /Total
                   </p>
                 </div>
                 <button
-                  disabled={!preSaleBool}
-                  className={preSaleBool ? "" : "disable"}
+                  disabled={
+                    (preSaleBool && !whitelistMessage) ||
+                    (!preSaleBool && !mainSaleBool)
+                  }
+                  className={
+                    (preSaleBool && !whitelistMessage && "disable") ||
+                    (!preSaleBool && !mainSaleBool && "disable")
+                  }
                   onClick={() => {
-                    presaleBuy(
-                      preSaleValue,
-                      whitelistMessage,
-                      count,
-                      setRefresh
-                    );
+                    if (preSaleBool) {
+                      presaleBuy(
+                        preSaleValue,
+                        whitelistMessage,
+                        count,
+                        setRefresh
+                      );
+                    } else {
+                      buy(mainSaleValue, count, setRefresh);
+                    }
                   }}
                 >
                   MINT
